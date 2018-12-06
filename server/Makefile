@@ -3,6 +3,7 @@
 PS_SRC = src
 COMPILED_PS = ../src/compiled_ps
 OUTPUT = output
+GEN_MODULES = $(shell ls .psc-package/$$(jq '.set' psc-package.json -r)/erl-modules/*/scripts/gen_module_names.sh)
 
 all: ps erl
 
@@ -10,6 +11,7 @@ ide:
 	psc-package sources | xargs purs compile '$(PS_SRC)/**/*.purs' '../shared/**/*.purs' --json-errors
 
 ps:
+	$(GEN_MODULES)
 	psc-package sources | xargs purs compile '$(PS_SRC)/**/*.purs' '../shared/**/*.purs'
 
 # Useful to update externs if sources won't compile

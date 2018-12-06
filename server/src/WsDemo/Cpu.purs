@@ -1,7 +1,5 @@
 module WsDemo.Cpu (avg1, avg5, avg15) where
 
-import Prelude
-
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 

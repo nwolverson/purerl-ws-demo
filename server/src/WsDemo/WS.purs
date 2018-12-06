@@ -1,15 +1,13 @@
 module WsDemo.WS where
 
-import Debug.Trace
-import Effect.Console
-import Prelude
-import WsDemo.Model
 
-import Attribute (Attribute(..))
+import Prelude
+import Effect.Console (log)
+import WsDemo.Model (Message)
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
-import Effect.Uncurried (EffectFn2, mkEffectFn1, mkEffectFn2)
-import Erl.Cowboy.Handlers.WebSocket (CallResult, CowboyWebsocketBehaviour, Frame(..), FrameHandler, InfoHandler, InitHandler, WSInitHandler, initResult, okResult, outFrame, replyResult)
+import Effect.Uncurried (mkEffectFn1, mkEffectFn2)
+import Erl.Cowboy.Handlers.WebSocket (CallResult, CowboyWebsocketBehaviour, Frame(..), FrameHandler, InfoHandler, InitHandler, WSInitHandler, cowboyWebsocketBehaviour, initResult, okResult, outFrame, replyResult)
 import Erl.Data.List (singleton)
 import Simple.JSON as SimpleJSON
 import WsDemo.Cpu as CPU
@@ -39,20 +37,19 @@ websocket_handle = mkEffectFn2 \frame state -> do
   log "got frame"
   pure $ okResult state
 
-type FixedInfoHandler a s = EffectFn2 a s (CallResult s)
-websocket_info :: FixedInfoHandler InfoMessage State
-websocket_info = mkEffectFn2 info1
+websocket_info :: InfoHandler InfoMessage State
+websocket_info = mkEffectFn2 go
   where
-  info1 :: InfoMessage -> State -> Effect (CallResult Unit)
-  info1 msg state = do
+  go :: InfoMessage -> State -> Effect (CallResult Unit)
+  go msg state = do
     avg1' <- CPU.avg1
     avg5' <- CPU.avg5
     avg15' <- CPU.avg15
     case avg1', avg5', avg15' of 
       Just avg1, Just avg5, Just avg15 -> do
-        let msg :: Message
-            msg = { load: { avg1, avg5, avg15 }}
-        let outFrames = singleton $ outFrame $ TextFrame $ SimpleJSON.writeJSON msg
+        let m :: Message
+            m = { load: { avg1, avg5, avg15 }}
+        let outFrames = singleton $ outFrame $ TextFrame $ SimpleJSON.writeJSON m
         pure $ replyResult state outFrames
       _, _, _ -> do
         log "Some issue fetching load info"
