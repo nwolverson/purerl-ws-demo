@@ -1,0 +1,14 @@
+{
+    "set": "psc-0.12.1",
+    "depends": [
+        "aff-coroutines",
+        "console",
+        "halogen",
+        "js-timers",
+        "prelude",
+        "simple-json",
+        "web-socket"
+    ],
+    "name": "client",
+    "source": "https://github.com/purescript/package-sets"
+}

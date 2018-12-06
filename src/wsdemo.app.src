@@ -1,0 +1,19 @@
+{application, wsdemo,
+ [{description, "PureScript Cowboy WebSocket demo with simple-json"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, { wsDemo_server@ps, []}},
+  {applications,
+   [kernel
+    ,stdlib
+    ,cowboy
+    ,jsx
+    ,os_mon
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.

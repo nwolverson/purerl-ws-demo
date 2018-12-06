@@ -1,0 +1,13 @@
+{
+  "name": "ws-demo",
+  "set": "erl-0.12.0-20181116",
+  "source": "https://github.com/purerl/package-sets.git",
+  "depends": [
+    "console",
+    "debug",
+    "erl-cowboy",
+    "erl-process",
+    "prelude",
+    "simple-json"
+  ]
+}

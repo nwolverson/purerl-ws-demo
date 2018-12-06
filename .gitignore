@@ -1,0 +1,8 @@
+src/compiled_ps/
+output
+.psc-package
+.psc-ide-port
+*client/bundle.js
+priv/*.js
+.vscode
+_build

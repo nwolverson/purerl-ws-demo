@@ -1,0 +1,13 @@
+{
+    "set": "local",
+    "depends": [
+        "console",
+        "js-timers",
+        "prelude",
+        "simple-json",
+        "web-socket",
+        "spork"
+    ],
+    "name": "client",
+    "source": ""
+}
